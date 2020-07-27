@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    </head>
+    <body >
+        <div class="container root">
+            <span id='success'>{{ message }}</span>
+            {% block content %}
+            {% include "header.html" %}
+            {% include "search.html" %}
+            {% include "result.html" %}
+            {% endblock %}
+        </div>
+        <footer class="container">
+            <div class="footer">&copy; <a href="https://github.com/cdvx">cdvx</a></div>
+        </footer>
+        <script>
+            var submitData = function(){
+                let data = document.getElementById("email-data").value
+                
+                let validateEmail =(email) => {
+                    var re = /\S+@\S+\.\S+/;
+                    return re.test(email);
+                }
+                let error = !validateEmail(data) ? 'Please enter a valid email address' : null
+                if (error == null){
+                    return fetch('http://127.0.01:5000/', {
+                        method: "POST",
+                        mode: 'cors',
+                        headers: new Headers({'Content-Type': 'application/json'}),//, 'Access-Control-Allow-Origin':'*'}), 
+                        body: JSON.stringify({email: data})}).then(()=>{
+                            notifySuccess()
+                        })
+                } else {
+                    let err = document.getElementById("error");
+                    err.innerHTML = error;
+                    err.style.display = 'block';
+                    setTimeout(()=>{
+                        err.style.display = 'none';
+                    }, 3000)
+                }
+            }
+            var notifySuccess = function(){
+                let success = document.getElementById("success");
+                success.innerHTML = "Email successfully sent!";
+                success.style.display = 'block';
+                setTimeout(()=>{
+                    success.style.display = 'none';
+                }, 5000)
+            }
+            
+        </script>
+    </body>
+</html>

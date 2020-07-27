@@ -1,0 +1,21 @@
+body {
+    background: teal !important;
+}
+
+.search {
+
+}
+h1.font-italic {
+    width: auto;
+    margin: 10px auto;
+    border: 1px solid pink;
+}
+
+div.container.root, footer.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,6 @@
+# virtual env
+venv/
+
+
+# migrations
+migrations/
