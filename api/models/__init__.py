@@ -10,4 +10,4 @@ try:
         db.create_all()
 
 except Exception as e:
-    print("error occured whilw connecting to db -", e)
+    print("Error occured while connecting to db -", e)

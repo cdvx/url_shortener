@@ -1,14 +1,97 @@
+
 body {
-    background: teal !important;
+    background: black !important;
+    padding: 10rem;
+    font-family: 'Roboto Mono', monospace;
 }
 
 .search {
-
+    /* border: 1px solid blue; */
+    width: 100%;
+    font-family: 'Roboto Mono', monospace;
 }
+
+.search form {
+    width: 100%;
+}
+div.submit-wrapper {
+    margin: 20px auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+button#submit {
+    border: 1px solid grey;
+    height: 55px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 17px;
+    width: 30%;
+    background: inherit;
+    color: white;
+    transition: transform .3s ease-out;
+}
+
+button#submit:hover {
+    border: 1px solid rgb(90, 22, 201);
+    color: rgb(218, 173, 25);
+    transform: translate(0, -5px);
+}
+button#submit:focus {
+    outline: none;
+}
+
+.search-input:focus {
+    outline: none;
+    text-align: left;
+    padding-left: 20px;
+}
+
+#error, #success, #result, #back {
+    display: none;
+}
+
+#success {
+    width: 100%;
+    text-align: center;
+}
+
+.search-input:hover {
+    border: 1px solid rgb(64, 67, 243);
+}
+
+.search-input {
+    width: 100%;
+    background: inherit;
+    height: 50px;
+    border: 1.5px solid rgba(14, 98, 109, 0.76);
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    transition: all .3s ease-out;
+    color: white;
+}
+
 h1.font-italic {
     width: auto;
     margin: 10px auto;
-    border: 1px solid pink;
+    color: white;
+}
+
+.header span {
+    margin: 7px auto;
+    color: grey;
+    font-size: 23px;
+}
+
+header,div.header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+header {
+    margin: 20px auto;
 }
 
 div.container.root, footer.container {
@@ -16,6 +99,66 @@ div.container.root, footer.container {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 50%;
     flex-wrap: wrap;
+    margin: auto;
+    font-family: 'Roboto Mono', monospace;
 }
+
+
+.result #back {
+    text-decoration: none;
+    margin: 20px auto;
+    width: 100%;
+    text-align: center;
+}
+footer #copy {
+    display: inline-flex;
+    margin: 5px;
+}
+footer #copy #back {
+    color:grey !important;
+    display: block;
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 600px) {
+    div.container.root, footer.container {
+        width: 50%;
+    }
+    body {
+        padding: 5rem;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    div.container.root, footer.container {
+        width: 100%;
+    }
+    body {
+        padding: 1.5rem;
+    }
+    button#submit {
+        width: 45%;
+    }
+    
+}
+
+@media only screen and (max-width: 400px) {
+    div.container.root, footer.container {
+        width: 100%;
+    }
+    body {
+        padding: 2rem;
+    }
+    button#submit {
+        width: 45%;
+    }
+    
+}
+
+footer .footer {
+    color: grey;
+    font-family: 'Roboto Mono', monospace;
+}
+

@@ -1,0 +1,31 @@
+
+SH0RTN.ME Url Shortener Notes
+========================================================================
+
+Notes:
+------
+- App uses a base62 string approach and randomises 5 choices of characters
+  to make up the short url slug 
+- A check uses optimised query that returns scalar instead or row from db to
+  prevent regenerating slug for url that's already in db
+- Application is built with flask using jinja templates
+- Persistent data store used is PostgreSQL
+
+Prerequisites:
+--------------
+To run this app locally, the following conditions need to be met.
+- A linux environment with
+  python3 installed and added to PATH.
+- PostgreSQL installed
+- url_shortener_db and url_shortener_db database created with PostgreSQL
+  ( Db names can be changed as seen fit. The .env/environment file should 
+  also be updated accordingly with the new database names)
+- PostgreSQL server running on port 5432 
+- Populate .env file from .env.sample file with own entries for user 
+
+Assumptions:
+-------------
+- RDBM to be used
+- Not so many users and so random random slug generated
+  is limited to 5 characters which allows for up to 65 ^ 5 options
+

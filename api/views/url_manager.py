@@ -1,60 +1,47 @@
-from flask import Blueprint, g, request
-from ..utils import Helpers as hf
+from flask import Blueprint, g, jsonify, redirect, render_template, request
 from flask_api import status
 
-from .decorators import validate_link_data
 from ..models.url import Link
+from ..utils import Helpers as hf
+from .decorators import validate_link_data
 
 url_shortener = Blueprint('url_shortener', __name__)
 
 
-@url_shortener.route('/', methods=('POST', ))
+@url_shortener.route('/', methods=('POST', 'GET' ))
 @validate_link_data
 def shorten_url():
-    try:
-        count = g.count
-    except AttributeError:
-        g.count = count = 62
+    if request.method == 'GET':
+        return render_template('main.html', success=True, message='message')
 
-    short_unique_str = hf.to_base_62(count)
+    short_unique_str = hf.to_base_62()
+    if Link.exists(short_unique_str, "short_url"):
+        short_unique_str = hf.to_base_62()
 
     data = request.get_json()
 
     link = data['link']
-
     record_exists = Link.exists(link, 'long_url') 
     if record_exists:
-        short_url = Link.get(long_url=link)
+        short_url = Link.get(long_url=link).short_url
         return hf.custom_response(
-            dict(shortened_url=short_url.to_dict(),message='Url successfully retrieved.'),
-            status.HTTP_200_OK, True, [] )
+            short_url,
+            status.HTTP_200_OK, True, False )
 
-
-    # short_unique_str = short_unique_str[:5]
     short_url = Link(long_url=link, short_url=short_unique_str)
-
 
     success = short_url.shorten_url()
     if success:
-        count += 3
-        g.count = count
         return hf.custom_response(
-            dict(shortened_url=short_url.to_dict(),message='Url successfully shortened.'),
-            status.HTTP_200_OK, True, [] )
-
+            short_url.short_url,
+            status.HTTP_200_OK, True, False )
     return hf.custom_response(
-        {}, status.HTTP_417_EXPECTATION_FAILED,
-        False, ['Failed to shorten url, please try again.']
+        False, status.HTTP_417_EXPECTATION_FAILED,
+        False, 'Failed to shorten url, please try again.'
     )
 
-
-@url_shortener.route('/', methods=('GET',))
-def got_to():
-    url = request.args.get('url', None)
-    if not url:
-        return hf.custom_response(dict(message="Enter url to shorten."), status.HTTP_200_OK, True, [])
+@url_shortener.route('/<url>', methods=('GET',))
+def get_url(url): 
     url = Link.get_short_url(url)
-    if url:
-        long_url = url.long_url
-        return redirect(long_url)
-    return hf.custom_response({}, status.HTTP_404_NOT_FOUND, False, [f'Requested url, {request.base_url}{url} not found.'])
+    long_url = url.long_url
+    return redirect(long_url)

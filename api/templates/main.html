@@ -3,14 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@340&display=swap" rel="stylesheet">        <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     </head>
     <body >
         <div class="container root">
-            <span id='success'>{{ message }}</span>
+
             {% block content %}
             {% include "header.html" %}
             {% include "search.html" %}
@@ -18,41 +17,50 @@
             {% endblock %}
         </div>
         <footer class="container">
-            <div class="footer">&copy; <a href="https://github.com/cdvx">cdvx</a></div>
+            <div class="footer" id='copy'>© <a  href="https://github.com/cdvx">cdvx</a></div>
         </footer>
         <script>
             var submitData = function(){
-                let data = document.getElementById("email-data").value
-                
-                let validateEmail =(email) => {
-                    var re = /\S+@\S+\.\S+/;
-                    return re.test(email);
-                }
-                let error = !validateEmail(data) ? 'Please enter a valid email address' : null
+                let data = document.getElementById("long-url").value
+                let error = null; 
                 if (error == null){
                     return fetch('http://127.0.01:5000/', {
                         method: "POST",
                         mode: 'cors',
-                        headers: new Headers({'Content-Type': 'application/json'}),//, 'Access-Control-Allow-Origin':'*'}), 
-                        body: JSON.stringify({email: data})}).then(()=>{
-                            notifySuccess()
+                        headers: new Headers({'Content-Type': 'application/json', 'Accept': 'application/json'}),//, 'Access-Control-Allow-Origin':'*'}), 
+                        body: JSON.stringify({link: data})})
+                        .then(response => {console.log(response)
+                        return response.json()})
+                        .then(data=>{
+                            
+                            if (data.error){
+                                let err = document.getElementById("error");
+                                err.innerHTML = data.error;
+                                err.style.color = 'red';
+                                err.style.marginBottom = '10px';
+                                err.style.display = 'block';
+                                setTimeout(()=>{
+                                    err.style.display = 'none';
+                                }, 3000)
+
+                            } else if (data.success && data.short_url) {
+                                let result = document.getElementById("result");
+                                let search = document.getElementById("search");
+                                let success = document.getElementById("success");
+                                let back = document.getElementById("back");
+                                result.innerHTML = `http://127.0.01:5000/${data.short_url}`;
+                                result.href = `http://127.0.01:5000/${data.short_url}`;
+                                result.style.color = 'green';
+                                result.style.margin = '10px';
+                                result.style.display = 'block';
+                                success.style.display = 'block';
+                                back.style.display = 'block';
+                                success.style.color = 'grey';
+                                search.style.display = 'none';
+                            }
+                            
                         })
-                } else {
-                    let err = document.getElementById("error");
-                    err.innerHTML = error;
-                    err.style.display = 'block';
-                    setTimeout(()=>{
-                        err.style.display = 'none';
-                    }, 3000)
                 }
-            }
-            var notifySuccess = function(){
-                let success = document.getElementById("success");
-                success.innerHTML = "Email successfully sent!";
-                success.style.display = 'block';
-                setTimeout(()=>{
-                    success.style.display = 'none';
-                }, 5000)
             }
             
         </script>

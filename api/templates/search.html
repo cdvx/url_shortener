@@ -1,11 +1,12 @@
+<div class="search" id="search">
 
-<div class="search">
-    <form class="input-group m-3" action="{{ url_for('url_shortener.shorten_url') }}" method="post">
-        <input type="text" id="link-data" class="form-control" placeholder="Enter url to be shortened..." aria-label="enter url" aria-describedby="button-addon2">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" onclick="submitData()" type="button" id="button-addon2">Shorten Url</button>
-          <!-- <button class="btn btn-outline-secondary" onclick="submitData()" type="button" id="button-addon2">send report</button> -->
+    <div class="error"><span id='error'>{{ error }}</span></div>
+    <form action="{{ url_for('url_shortener.shorten_url') }}" method="post">
+        <input type="text" id="long-url" class="search-input" placeholder="Insert long URL here" aria-label="enter url" aria-describedby="button-addon">
+        <div class="submit-wrapper">
+            <button onclick="submitData()" type="button" id="submit">SHORTEN</button>
         </div>
     </form>
+
 </div>
 

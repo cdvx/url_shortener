@@ -1,13 +1,14 @@
-from flask import Flask, render_template
 from os import path
-from .config import configure_app
-from .utils import error_handlers
-from .views import url_shortener 
-from .models.url import Link
-from .models import db
+
+from flask import Flask, render_template
+from flask_cors import CORS
 from flask_migrate import Migrate
 
-from flask_cors import CORS
+from .config import configure_app
+from .models import db
+from .models.url import Link
+from .utils import error_handlers
+from .views import url_shortener
 
 dir_path = path.dirname(path.realpath(__file__))
 

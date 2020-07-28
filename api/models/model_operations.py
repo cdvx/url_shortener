@@ -14,20 +14,13 @@ class ModelOperations:
         db.session.commit()
         return self
 
-    def commit_to_session(self):
+    @classmethod
+    def count(cls):
         """
-        commit model instance to session
+        Returns total entries in the database
         """
-        db.session.commit()
-        return self
+        return cls.query.count()
 
-    def add_to_session(self):
-        """
-        add model instance to session
-        """
-        db.session.add(self)
-        db.session.flush()
-        return self
 
     @classmethod
     def get(cls, **kwargs):
@@ -35,14 +28,6 @@ class ModelOperations:
         return entries by key
         """
         return cls.query.filter_by(**kwargs).one_or_none()
-
-
-    def delete(self):
-        """
-        Delete entity
-        """
-        db.session.delete(self)
-        db.session.commit()
 
     
     @classmethod

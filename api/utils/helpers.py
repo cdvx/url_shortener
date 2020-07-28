@@ -1,11 +1,10 @@
 
-from flask import Response
-from flask_api import status
 import json
-
 from random import choices
 
-# from .messages import AUTH_ERRORS, ERRORS, MESSAGES
+from flask import Response
+from flask_api import status
+
 from .constants import ALPHABET
 
 
@@ -17,8 +16,8 @@ class Helpers:
         Custom Response Function
         """
         response = {
-            'data': res,
-            'errors': errors,
+            'short_url': res,
+            'error': errors,
             'success': success
         }
         return Response(
@@ -33,7 +32,7 @@ class Helpers:
         Return custom response for bad request data
         """
         return Helpers.custom_response(
-            {}, status, False,
+            False, status, False,
             errors)
 
     @staticmethod
@@ -42,8 +41,8 @@ class Helpers:
         Return custom response for 500s
         """
         return Helpers.custom_response(
-            {}, status.HTTP_500_INTERNAL_SERVER_ERROR, False,
-            [str(e)])
+            False, status.HTTP_500_INTERNAL_SERVER_ERROR, False,
+            'Something went wrong, if problem persists please contact us @cdvx on github.')
 
     @staticmethod
     def method_not_allowed_response(e):
@@ -51,13 +50,13 @@ class Helpers:
         Return custom response for 405s
         """
         return Helpers.custom_response(
-            {}, status.HTTP_405_METHOD_NOT_ALLOWED, False,
-            [str(e)])
+            False, status.HTTP_405_METHOD_NOT_ALLOWED, False,
+            'Mehtod not allowed')
 
     @staticmethod
-    def to_base_62(num):
+    def to_base_62():
         """
-        Generate random short base 62 string from num
+        Generate random short string
         """
         short_str = ''.join(choices(ALPHABET, k=5))
         return short_str
