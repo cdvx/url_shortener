@@ -2,14 +2,19 @@
 SH0RTN.ME Url Shortener Notes
 ========================================================================
 
+Time Spent:
+------------
+- 3.5 hours
+- Coverage 81%
+
 Notes:
 ------
 - App uses a base62 string approach and randomises 5 choices of characters
-  to make up the short url slug 
+  to make up the short url slug.
 - A check uses optimised query that returns scalar instead or row from db to
-  prevent regenerating slug for url that's already in db
+  prevent regenerating slug for url that's already in db.
 - Application is built with flask using jinja templates
-- Persistent data store used is PostgreSQL
+- Persistent data store used is PostgreSQL.
 
 Prerequisites:
 --------------
@@ -32,10 +37,14 @@ Assumptions:
 
 How to Run code
 -----------------
-- clone repository, run `https://github.com/cdvx/url_shortener.git`
+- clone repository, run `git clone https://github.com/cdvx/url_shortener.git`
 - cd into url_shortener, run `cd url_shortener`
 - At this point you should be in the root directory of the app, which includes a README.md
   file among others.
+- Create a .env file based on the .env.sample file or use the .env files shared via email
+  ( to copy from .env.sample files, run `cp .env.sample .env`, Note that a .env file has 
+  been created. You can now proceed.)
 - Run the setup, run `make setup`
 - Run the server, run `make server`
 - Run tests, run `make test`
+

@@ -12,7 +12,7 @@ url_shortener = Blueprint('url_shortener', __name__)
 @validate_link_data
 def shorten_url():
     if request.method == 'GET':
-        return render_template('main.html', success=True, message='message')
+        return render_template('main.html', success=True)
 
     short_unique_str = hf.to_base_62()
     if Link.exists(short_unique_str, "short_url"):

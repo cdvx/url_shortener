@@ -40,10 +40,4 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-
-    # State Routes
-    @app.route('/yow')
-    def api_documentation():
-        return render_template("main.html")
-
     return app

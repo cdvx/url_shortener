@@ -1,8 +1,13 @@
 # virtual env
 venv/
 
+# .env file
+.env
 
 # migrations
 migrations/
 
+# coverage
 .coverage
+
+.pytest_cache/
