@@ -29,3 +29,13 @@ Assumptions:
 - Not so many users and so random random slug generated
   is limited to 5 characters which allows for up to 65 ^ 5 options
 
+
+How to Run code
+-----------------
+- clone repository, run `https://github.com/cdvx/url_shortener.git`
+- cd into url_shortener, run `cd url_shortener`
+- At this point you should be in the root directory of the app, which includes a README.md
+  file among others.
+- Run the setup, run `make setup`
+- Run the server, run `make server`
+- Run tests, run `make test`
