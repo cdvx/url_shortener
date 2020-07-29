@@ -9,7 +9,7 @@ Time Spent:
 
 Notes:
 ------
-- App uses a base62 string approach and randomises 5 choices of characters
+- App uses a base62 string algorithm that randomises 5 choices of the ascii characters
   to make up the short url slug.
 - A check uses optimised query that returns scalar instead or row from db to
   prevent regenerating slug for url that's already in db.

@@ -1,6 +1,6 @@
 from os import path
 
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask_cors import CORS
 from flask_migrate import Migrate
 
@@ -39,5 +39,10 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(path.join(app.root_path, 'static'),
+                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
     return app

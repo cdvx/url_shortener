@@ -19,7 +19,7 @@ def validate_link_data(func):
             return func(*args, **kwargs)
 
         request_is_json = request.is_json
-        req_data = request.get_json()
+        req_data = request.get_json() or {}
         link = req_data.get('link', '').strip()
 
         invalid_link_data = not request_is_json or req_data \
